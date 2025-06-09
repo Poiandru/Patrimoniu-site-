@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Protejarea Patrimoniului Cultural</title>
+<style>
+  /* Reset și bază */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    transition: background 0.3s, color 0.3s;
+  }
+  header {
+    background: #800000;
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+  nav {
+    background: #a00000;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  nav a:hover {
+    background: #500000;
+  }
+  section {
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  }
+  h2 {
+    border-bottom: 2px solid #800000;
+    padding-bottom: 8px;
+  }
+
+  /* Galerie */
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  .gallery-item {
+    width: calc(33% - 10px);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+  }
+  .gallery-caption {
+    padding: 8px;
+    background: #800000;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* Quiz */
+  .quiz-question {
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .quiz-options button {
+    display: block;
+    margin: 8px 0;
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    border: 2px solid #800000;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .quiz-options button:hover {
+    background: #800000;
+    color: white;
+  }
+  .quiz-options button.correct {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+  }
+  .quiz-options button.wrong {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+  }
+  .quiz-score {
+    margin-top: 15px;
+    font-weight: 700;
+  }
+
+  /* Votare */
+  .vote-buttons button {
+    padding: 12px 25px;
+    margin: 10px 15px 10px 0;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    background: #800000;
+    transition: background 0.3s;
+  }
+  .vote-buttons button:hover {
+    background: #a00000;
+  }
+  .results {
+    margin-top: 15px;
+    font-weight: 600;
+  }
+
+  /* Testimonials */
+  .testimonial-list {
+    list-style: none;
+    padding: 0;
+  }
+  .testimonial-list li {
+    background: #faf0f0;
+    margin-bottom: 12px;
+    padding: 12px 15px;
+    border-left: 5px solid #800000;
+    border-radius: 4px;
+    font-style: italic;
+  }
+
+  /* Fapte interesante */
+  .fact {
+    background: #f9f9f9;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border-left: 5px solid #800000;
+    border-radius: 4px;
+  }
+
+  /* Formular contact */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  form input, form textarea {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+  }
+  form button {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #800000;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  form button:hover {
+    background: #a00000;
+  }
+
+  /* Dark mode */
+  body.dark {
+    background: #121212;
+    color: #ddd;
+  }
+  body.dark header {
+    background: #440000;
+    color: #f1f1f1;
+  }
+  body.dark nav {
+    background: #660000;
+  }
+  body.dark nav a:hover {
+    background: #990000;
+  }
+  body.dark section {
+    background: #1e1e1e;
+    box-shadow: 0 0 12px rgb(255 255 255 / 0.1);
+  }
+  body.dark .gallery-caption {
+    background: #b04040;
+  }
+  body.dark .quiz-options button {
+    background: #222;
+    border-color: #b04040;
+    color: #ddd;
+  }
+  body.dark .quiz-options button:hover {
+    background: #b04040;
+    color: white;
+  }
+  body.dark .vote-buttons button {
+    background: #b04040;
+  }
+  body.dark .vote-buttons button:hover {
+    background: #d05050;
+  }
+  body.dark .testimonial-list li {
+    background: #2a1a1a;
+    border-left-color: #b04040;
+  }
+  body.dark .fact {
+    background: #2a1a1a;
+    border-left-color: #b04040;
+  }
+  body.dark form input, body.dark form textarea {
+    background: #2a1a1a;
+    color: #ddd;
+    border-color: #b04040;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .gallery-item {
+      width: calc(50% - 10px);
+    }
+  }
+  @media (max-width: 400px) {
+    .gallery-item {
+      width: 100%;
+    }
+    nav {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vote-buttons button {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    form button {
+      width: 100%;
+    }
+  }
+
+  /* Scroll smooth for nav links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+</style>
+</head>
+<body>
+
+<header>Protejarea Patrimoniului Cultural</header>
+
+<nav>
+  <a href="#intro">Home</a>
+  <a href="#gallery">Galerie</a>
+  <a href="#quiz">Quiz</a>
+  <a href="#vote">Votează</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="intro">
+  <h2>Bine ai venit!</h2>
+  <p>Acest site este dedicat protejării patrimoniului cultural din România. Explorează informații, participă la quiz și votează pentru a contribui la conștientizarea importanței patrimoniului nostru.</p>
+</section>
+
+<section id="gallery">
+  <h2>Galerie de Monumente</h2>
+  <div class="gallery">
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Castelul_Peles.jpg/320px-Castelul_Peles.jpg" alt="Castelul Peleș" />
+      <div class="gallery-caption">Castelul Peleș</div>
+    </div>
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Cetatea_Alba_Carolina_2015.jpg/320px-Cetatea_Alba_Carolina_2015.jpg" alt="Cetatea Alba Carolina" />
+      <div class="gallery-caption">Cetatea Alba Carolina</div>
+    </div>
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Mănăstirea_Voroneț_2009.jpg/320px-Mănăstirea_Voroneț_2009.jpg" alt="Mănăstirea Voroneț" />
+      <div class="gallery-caption">Mănăstirea Voroneț</div>
+    </div>
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Bran_Castle_in_Transylvania.jpg/320px-Bran_Castle_in_Transylvania.jpg" alt="Castelul Bran" />
+      <div class="gallery-caption">Castelul Bran</div>
+    </div>
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Monument_to_Stefan_Cel_Mare_in_Chisinau.jpg/320px-Monument_to_Stefan_Cel_Mare_in_Chisinau.jpg" alt="Monumentul Ștefan cel Mare" />
+      <div class="gallery-caption">Monumentul Ștefan cel Mare</div>
+    </div>
+    <div class="gallery-item" tabindex="0">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Corvin_Castle_-_Hunedoara_-_Romania_2015_-_panoramio.jpg/320px-Corvin_Castle_-_Hunedoara_-_Romania_2015_-_panoramio.jpg" alt="Castelul Corvinilor" />
+      <div class="gallery-caption">Castelul Corvinilor</div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>Quiz Cultural</h2>
+  <div id="quiz-container">
+    <div id="quiz-question" class="quiz-question">Încărcare întrebare...</div>
+    <div id="quiz-options" class="quiz-options"></div>
+    <div id="quiz-score" class="quiz-score"></div>
+  </div>
+</section>
+
+<section id="vote">
+  <h2>Votează pentru protejarea patrimoniului</h2>
+  <div class="vote-buttons">
+    <button data-vote="da">Da</button>
+    <button data-vote="nu_sunt_sigur">Nu sunt sigur</button>
+    <button data-vote="nu">Nu</button>
+  </div>
+  <div class="results">
+    <p>Da: <span id="count-da">0</span></p>
+    <p>Nu sunt sigur: <span id="count-nu_sunt_sigur">0</span></p>
+    <p>Nu: <span id="count-nu">0</span></p>
+  </div>
+</section>
+
+<section id="testimonials">
+  <h2>Ce spun vizitatorii</h2>
+  <ul class="testimonial-list" id="testimonial-list">
+    <li>„Patrimoniul cultural ne definește identitatea.”</li>
+    <li>„Este important să păstrăm tradițiile și monumentele pentru generațiile viitoare.”</li>
+    <li>„Am vizitat multe situri UNESCO din România și m-au impresionat.”</li>
+  </ul>
+</section>
+
+<section id="facts">
+  <h2>Știai că...?</h2>
+  <div class="fact">România are 7 situri UNESCO recunoscute pentru patrimoniul cultural și natural.</div>
+  <div class="fact">Castelul Peleș este considerat unul dintre cele mai frumoase castele din Europa.</div>
+  <div class="fact">Mănăstirea Voroneț este faimoasă pentru culoarea albastru intens, numită „albastru de Voroneț”.</div>
+  <div class="fact">Cetatea Alba Carolina are o istorie de peste 300 de ani și o arhitectură barocă impresionantă.</div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <form id="contact-form">
+    <input type="text" id="name" placeholder="Nume" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <textarea id="message" rows="4" placeholder="Mesaj" required></textarea>
+    <button type="submit">Trimite</button>
+    <p id="contact-status" style="margin-top:10px;"></p>
+  </form>
+</section>
+
+<section style="text-align:center; margin: 30px 0;">
+  <button id="dark-mode-toggle" style="padding:10px 20px; border:none; border-radius:6px; background:#800000; color:white; cursor:pointer; font-weight:600;">Dark Mode</button>
+</section>
+
+<script>
+  // --- DARK MODE ---
+  const darkModeBtn = document.getElementById('dark-mode-toggle');
+  const body = document.body;
+  // Verifică localStorage pentru tema salvată
+  if(localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+  }
+  darkModeBtn.onclick = () => {
+    body.classList.toggle('dark');
+    if(body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
+  // --- VOTARE CU localStorage ---
+  const voteButtons = document.querySelectorAll('.vote-buttons button');
+  const countDa = document.getElementById('count-da');
+  const countNuSuntSigur = document.getElementById('count-nu_sunt_sigur');
+  const countNu = document.getElementById('count-nu');
+
+  // Încarcă voturile din localStorage sau inițializează
+  let votes = JSON.parse(localStorage.getItem('votes')) || { da:0, nu_sunt_sigur:0, nu:0 };
+  function updateVoteCounts() {
+    countDa.textContent = votes.da;
+    countNuSuntSigur.textContent = votes.nu_sunt_sigur;
+    countNu.textContent = votes.nu;
+  }
+  updateVoteCounts();
+
+  voteButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const voteType = btn.getAttribute('data-vote');
+      votes[voteType]++;
+      localStorage.setItem('votes', JSON.stringify(votes));
+      updateVoteCounts();
+      alert('Mulțumim pentru vot!');
+    });
+  });
+
+  // --- QUIZ ---
+  const quizQuestions = [
+    {
+      question: "Ce tip de patrimoniu cultural este dansul popular?",
+      options: ["Imaterial", "Material", "Natural"],
+      answer: 0
+    },
+    {
+      question: "Castelul Peleș se află în:",
+      options: ["Brașov", "Sinaia", "Cluj-Napoca"],
+      answer: 1
+    },
+    {
+      question: "Câte situri UNESCO are România?",
+      options: ["5", "7", "9"],
+      answer: 1
+    },
+    {
+      question: "Ce culoare specifică are Mănăstirea Voroneț?",
+      options: ["Roșu", "Albastru", "Verde"],
+      answer: 1
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+  const quizQuestionEl = document.getElementById('quiz-question');
+  const quizOptionsEl = document.getElementById('quiz-options');
+  const quizScoreEl = document.getElementById('quiz-score');
+
+  function showQuestion() {
+    quizScoreEl.textContent = '';
+    const q = quizQuestions[currentQuestion];
+    quizQuestionEl.textContent = q.question;
+    quizOptionsEl.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if(i === q.answer) {
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('wrong');
+          // Arătăm și răspunsul corect
+          quizOptionsEl.querySelectorAll('button')[q.answer].classList.add('correct');
+        }
+        // Dezactivăm toate butoanele
+        quizOptionsEl.querySelectorAll('button').forEach(b => b.disabled = true);
+        // Mergem la întrebarea următoare după 2 sec
+        setTimeout(() => {
+          currentQuestion++;
+          if(currentQuestion < quizQuestions.length) {
+            showQuestion();
+          } else {
+            quizScoreEl.textContent = `Quiz terminat! Scorul tău: ${score} din ${quizQuestions.length}`;
+            quizQuestionEl.textContent = 'Mulțumim că ai participat!';
+            quizOptionsEl.innerHTML = '';
+          }
+        }, 2000);
+      };
+      quizOptionsEl.appendChild(btn);
+    });
+  }
+  showQuestion();
+
+  // --- FORMULAR CONTACT ---
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    // Preluăm datele
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if(!name || !email || !message) {
+      contactStatus.style.color = 'red';
+      contactStatus.textContent = 'Toate câmpurile sunt obligatorii!';
+      return;
+    }
+    // Simulăm trimiterea
+    contactStatus.style.color = 'green';
+    contactStatus.textContent = 'Mesajul tău a fost trimis cu succes!';
+
+    // Resetare formular după 3 sec
+    setTimeout(() => {
+      contactStatus.textContent = '';
+      contactForm.reset();
+    }, 3000);
+  });
+</script>
+
+</body>
+</html>
